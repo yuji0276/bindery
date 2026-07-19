@@ -49,7 +49,22 @@ bindery --md > ~/.config/keybind.md
 | nvim | `nvim/lua/config/keymaps.lua` | `map("mode", "key", ..., { desc = "..." })` を正規表現で抽出。Mods 列にモードを表示 |
 | wezterm | `wezterm/keybinds.lua` | Lua テーブルの `key = / mods =` を抽出。直前の `--` コメントを説明に |
 
+## 構成
+
+```
+main.go                     # CLI の殻: フラグ処理と配線のみ
+internal/bindery/           # ドメイン (テスト対象)
+  binding.go                #   Binding 型・Sort
+  collect.go                #   chezmoi 連携・sources()・Collect()
+  parsers.go                #   ソース別パーサ
+internal/cli/               # 表示層
+  render.go                 #   表 / Markdown / JSON 出力
+  fzf.go                    #   fzf 対話・$EDITOR 起動
+```
+
+依存の向きは `main` → `internal/cli` → `internal/bindery`（ドメインは表示層に依存しない）。
+
 ## パーサを追加する
 
-`parsers.go` に `func parseXxx(path string) ([]Binding, error)` を実装し、
-`main.go` の `sources()` に 1 行追加するだけ。
+`internal/bindery/parsers.go` に `func parseXxx(path string) ([]Binding, error)` を実装し、
+同 `internal/bindery/collect.go` の `sources()` に 1 行追加するだけ。
