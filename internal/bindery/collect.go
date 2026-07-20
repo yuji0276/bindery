@@ -41,8 +41,6 @@ func managedSet() map[string]bool {
 	return set
 }
 
-// Collect は全ソース (filterSrc が空でなければ該当ソースのみ) を走査し、
-// 収集した Binding とスキップ/失敗の警告メッセージを返す。
 func Collect(filterSrc string) ([]Binding, []string) {
 	managed := managedSet()
 	var all []Binding
@@ -52,9 +50,8 @@ func Collect(filterSrc string) ([]Binding, []string) {
 			continue
 		}
 		if _, err := os.Stat(s.path); err != nil {
-			continue // ファイルが無いソースは静かにスキップ
+			continue
 		}
-		// chezmoi 管理下かどうかを確認 (chezmoi が使える場合のみ)。
 		if managed != nil && !managed[s.path] {
 			warnings = append(warnings, fmt.Sprintf("%s は chezmoi 管理外のためスキップ: %s", s.name, s.path))
 			continue

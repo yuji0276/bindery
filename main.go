@@ -1,17 +1,3 @@
-// bindery — chezmoi 管理下の dotfile からキーバインド定義を集約して一覧表示するツール。
-//
-// 対応ソース: skhd / Neovim / WezTerm
-//
-//	bindery            # fzf があればインタラクティブ検索、なければ表を表示
-//	bindery -l         # 常に表で一覧表示 (fzf を使わない)
-//	bindery --md       # Markdown で出力 (keybind.md 生成用)
-//	bindery --json     # JSON で出力
-//	bindery -s skhd    # ソースで絞り込み (skhd/nvim/wezterm)
-//
-// fzf で選択して Enter すると、その定義がある行を $EDITOR (既定 nvim) で開く。
-//
-// ドメインロジックは internal/bindery、出力は internal/cli に分離している。
-// main はフラグ処理と両者の配線だけを担う薄い殻。
 package main
 
 import (
