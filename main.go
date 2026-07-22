@@ -7,6 +7,7 @@ import (
 
 	"bindery/internal/bindery"
 	"bindery/internal/cli"
+	"bindery/internal/sources"
 )
 
 func main() {
@@ -43,7 +44,7 @@ func main() {
 		}
 	}
 
-	bindings, warnings := bindery.Collect(filter)
+	bindings, warnings := bindery.Collect(sources.List(), filter)
 	for _, w := range warnings {
 		fmt.Fprintln(os.Stderr, "warning:", w)
 	}

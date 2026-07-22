@@ -11,10 +11,12 @@ type Binding struct {
 	Line   int    `json:"line"`
 }
 
-type source struct {
-	name  string
-	path  string
-	parse func(path string) ([]Binding, error)
+// Source は 1 つのキーバインド供給元 (skhd/nvim/wezterm) を表す。
+// 具体的な供給元リストは sources パッケージが構築する。
+type Source struct {
+	Name  string
+	Path  string
+	Parse func(path string) ([]Binding, error)
 }
 
 func Sort(bs []Binding) {
