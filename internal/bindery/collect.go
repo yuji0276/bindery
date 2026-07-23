@@ -4,23 +4,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 )
-
-func home() string {
-	h, _ := os.UserHomeDir()
-	return h
-}
-
-func sources() []source {
-	h := home()
-	return []source{
-		{"skhd", filepath.Join(h, ".config/skhd/skhdrc"), parseSkhd},
-		{"nvim", filepath.Join(h, ".config/nvim/lua/config/keymaps.lua"), parseNvim},
-		{"wezterm", filepath.Join(h, ".config/wezterm/keybinds.lua"), parseWezterm},
-	}
-}
 
 // managedSet は `chezmoi managed` の絶対パス集合を返す。
 // chezmoi が無い場合は nil を返し、呼び出し側はファイルの存在のみで判断する。
@@ -41,24 +26,24 @@ func managedSet() map[string]bool {
 	return set
 }
 
-func Collect(filterSrc string) ([]Binding, []string) {
+func Collect(srcs []Source, filterSrc string) ([]Binding, []string) {
 	managed := managedSet()
 	var all []Binding
 	var warnings []string
-	for _, s := range sources() {
-		if filterSrc != "" && s.name != filterSrc {
+	for _, s := range srcs {
+		if filterSrc != "" && s.Name != filterSrc {
 			continue
 		}
-		if _, err := os.Stat(s.path); err != nil {
+		if _, err := os.Stat(s.Path); err != nil {
 			continue
 		}
-		if managed != nil && !managed[s.path] {
-			warnings = append(warnings, fmt.Sprintf("%s は chezmoi 管理外のためスキップ: %s", s.name, s.path))
+		if managed != nil && !managed[s.Path] {
+			warnings = append(warnings, fmt.Sprintf("%s は chezmoi 管理外のためスキップ: %s", s.Name, s.Path))
 			continue
 		}
-		bs, err := s.parse(s.path)
+		bs, err := s.Parse(s.Path)
 		if err != nil {
-			warnings = append(warnings, fmt.Sprintf("%s のパースに失敗: %v", s.name, err))
+			warnings = append(warnings, fmt.Sprintf("%s のパースに失敗: %v", s.Name, err))
 			continue
 		}
 		all = append(all, bs...)
