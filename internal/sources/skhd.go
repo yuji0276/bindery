@@ -66,7 +66,6 @@ func normalizeMods(s string) string {
 	for i := range parts {
 		parts[i] = strings.TrimSpace(parts[i])
 	}
-	// 空要素を除去
 	cleaned := parts[:0]
 	for _, p := range parts {
 		if p != "" {
