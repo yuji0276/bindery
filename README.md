@@ -26,7 +26,7 @@ add a parser to `internal/sources/` when that changes.)
 - ⚡ **Interactive search** — fuzzy-find with `fzf`, then hit <kbd>Enter</kbd> to jump straight to the definition in `$EDITOR`.
 - 📄 **Multiple outputs** — interactive picker, plain table, Markdown, or JSON.
 - 🎯 **chezmoi-aware** — only parses files that chezmoi actually manages (falls back to file existence when chezmoi is absent).
-- 🧠 **Real Neovim introspection** — launches headless Neovim and reads the *live* keymaps via `nvim_get_keymap()`, including `desc`, source file, and line number.
+- 🧠 **Real Neovim introspection** — launches headless Neovim and reads the _live_ keymaps via `nvim_get_keymap()`, including `desc`, source file, and line number.
 
 ## Installation
 
@@ -69,11 +69,11 @@ bindery --md > ~/.config/keybind.md
 
 ### Supported formats
 
-| Source  | File                    | Extraction |
-|---------|-------------------------|------------|
-| skhd    | `skhd/skhdrc`           | `<mods> - <key> : <command>` form; trailing `# comment` becomes the description. |
-| nvim    | (live Neovim)           | Runs `nvim --headless` and dumps every active mapping via `nvim_get_keymap()` as JSON — capturing `desc`, source file, and line number. Mode is shown in the Mods column. String-`rhs` maps lack an `lnum`, so `desc` is grepped against `~/.config/nvim` to recover `file:line`. Falls back to regex-parsing `keymaps.lua` when Neovim is unavailable. |
-| wezterm | `wezterm/keybinds.lua`  | Extracts `key =` / `mods =` from the Lua table; the preceding `--` comment becomes the description. |
+| Source  | File                   | Extraction                                                                                                                                                                                                                                                                                                                                              |
+| ------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| skhd    | `skhd/skhdrc`          | `<mods> - <key> : <command>` form; trailing `# comment` becomes the description.                                                                                                                                                                                                                                                                        |
+| nvim    | (live Neovim)          | Runs `nvim --headless` and dumps every active mapping via `nvim_get_keymap()` as JSON — capturing `desc`, source file, and line number. Mode is shown in the Mods column. String-`rhs` maps lack an `lnum`, so `desc` is grepped against `~/.config/nvim` to recover `file:line`. Falls back to regex-parsing `keymaps.lua` when Neovim is unavailable. |
+| wezterm | `wezterm/keybinds.lua` | Extracts `key =` / `mods =` from the Lua table; the preceding `--` comment becomes the description.                                                                                                                                                                                                                                                     |
 
 ## Project layout
 
