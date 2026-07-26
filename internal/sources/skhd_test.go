@@ -32,7 +32,7 @@ func TestNormalizeMods(t *testing.T) {
 	}
 }
 
-func Test_parseSkhd(t *testing.T) {
+func TestParseSkhd(t *testing.T) {
 	cases := []struct {
 		name string
 		in   string
@@ -58,6 +58,48 @@ func Test_parseSkhd(t *testing.T) {
 			"cmd + shift -j: echo hi # フォーカスを下へ",
 			[]bindery.Binding{
 				{Source: "skhd", Mods: "cmd+shift", Key: "j", Desc: "フォーカスを下へ", Line: 1},
+			},
+		},
+		{
+			"ignore line without colon",
+			"this is not a keybind\ncmd -h: echo hi\n",
+			[]bindery.Binding{
+				{Source: "skhd", Mods: "cmd", Key: "h", Desc: "echo hi", Line: 2},
+			},
+		},
+		{
+			"ignore line with empty keydef",
+			": echo hi\n",
+			nil,
+		},
+		{
+			"ignore mode declaration and directive",
+			":: default\n.blacklist [\n\"terminal\"\n]\ncmd -h: echo hi\n",
+			[]bindery.Binding{
+				{Source: "skhd", Mods: "cmd", Key: "h", Desc: "echo hi", Line: 5},
+			},
+		},
+		{
+			"no mods",
+			"f1 : echo hi",
+			[]bindery.Binding{
+				{Source: "skhd", Mods: "", Key: "f1", Desc: "echo hi", Line: 1},
+			},
+		},
+		{
+			// strings.Cut は最初の "#" で切るので、2つ目以降は Desc に残る。
+			"multiple hash marks",
+			"cmd - h : echo # a # b",
+			[]bindery.Binding{
+				{Source: "skhd", Mods: "cmd", Key: "h", Desc: "a # b", Line: 1},
+			},
+		},
+		{
+			// command が空でも "#" 以降が Desc になる。
+			"comment only command",
+			"cmd - h : # コメントのみ",
+			[]bindery.Binding{
+				{Source: "skhd", Mods: "cmd", Key: "h", Desc: "コメントのみ", Line: 1},
 			},
 		},
 	}
@@ -88,5 +130,17 @@ func Test_parseSkhd(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestParseSkhdOpenError(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "notexist")
+
+	got, err := parseSkhd(path)
+	if err == nil {
+		t.Fatalf("parseSkhd(%q) error = nil, want error", path)
+	}
+	if got != nil {
+		t.Errorf("parseSkhd(%q) = %+v, want nil", path, got)
 	}
 }
