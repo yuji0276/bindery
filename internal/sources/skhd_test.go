@@ -87,7 +87,6 @@ func TestParseSkhd(t *testing.T) {
 			},
 		},
 		{
-			// strings.Cut は最初の "#" で切るので、2つ目以降は Desc に残る。
 			"multiple hash marks",
 			"cmd - h : echo # a # b",
 			[]bindery.Binding{
@@ -95,7 +94,6 @@ func TestParseSkhd(t *testing.T) {
 			},
 		},
 		{
-			// command が空でも "#" 以降が Desc になる。
 			"comment only command",
 			"cmd - h : # コメントのみ",
 			[]bindery.Binding{
