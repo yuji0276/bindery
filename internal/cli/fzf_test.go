@@ -23,3 +23,23 @@ func TestDispLen(t *testing.T) {
 		})
 	}
 }
+
+func TestPad(t *testing.T) {
+	cases := []struct {
+		name string
+		s    string
+		w    int
+		want string
+	}{
+		{"境界の最大値", "a", 1, "a"},
+		{"境界の最小上界", "a", 2, "a "},
+	}
+	for _, tt := range cases {
+		t.Run(tt.name, func(t *testing.T) {
+			got := pad(tt.s, tt.w)
+			if got != tt.want {
+				t.Errorf("pad(%q,%d) = %q, want %q", tt.s, tt.w, got, tt.want)
+			}
+		})
+	}
+}
