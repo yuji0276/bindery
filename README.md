@@ -153,3 +153,7 @@ fzf モードでは、絞り込んで **Enter** を押すとその定義があ�
 
 パーサの追加は、`internal/sources/` に `func parseXxx(path string) ([]bindery.Binding, error)` を実装し、
 `internal/sources/sources.go` の `List()` に 1 行追加するだけです。
+\n## b.key\nAdded b.key documentation entry.
+
+## b.key
+See docs/b.key.md for b.key usage.
