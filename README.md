@@ -157,3 +157,4 @@ fzf モードでは、絞り込んで **Enter** を押すとその定義があ�
 
 ## b.key
 See docs/b.key.md for b.key usage.
+# note
