@@ -1,3 +1,5 @@
+*[English version: design.en.md](design.en.md)*
+
 ## Data model
 - action どのような操作を行うか
 - mode nvimのinsert, zellijのtabを入れる
