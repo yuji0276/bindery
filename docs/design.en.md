@@ -2,6 +2,18 @@
 > The authoritative version is the Japanese [design.md](design.md).
 > If the two disagree, the Japanese version wins.
 
+# Design Doc
+
+## Use Case
+
+- Find the action bound to a given key
+- Find the key bound to a given action. action -> key (exact match)
+- Find out which keys conflict
+
+## Non Goal
+
+- No automatic cross-tool matching of actions. What an action refers to differs from tool to tool, so no canonical form exists.
+
 ## Data model
 
 - action: what operation is performed

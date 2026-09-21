@@ -1,5 +1,14 @@
 *[English version: design.en.md](design.en.md)*
 
+# Design Doc
+## Use Case
+- このキーに割り当てられたactionを知りたい
+- actionのキーを知りたい。action->key(完全一致)
+- キーの競合状況を知りたい。
+
+## Non Goal
+- actionの自動的な横断照合を行わない。支持対象が異なり正規系が存在しないためである。
+
 ## Data model
 - action どのような操作を行うか
 - mode nvimのinsert, zellijのtabを入れる
